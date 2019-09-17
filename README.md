@@ -1,6 +1,6 @@
 Using tensorflow.contrib.model_pruning.python Model pruning.
 
-1. runing LeNet_pruning.py get model
+1. runing LeNet_pruning.py generator model.
 
 2.runing read_parameter.py 
 
