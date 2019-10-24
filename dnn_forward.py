@@ -59,15 +59,6 @@ def weight_pruning(data_in, spares_rate):
     :param spares_rate: float
     :return: 2-D weight
     """
-    # [r, l] = data_in.shape
-    # data_sort = np.sort(abs(data_in.reshape([r*l])))
-    # data_zeros = data_sort[0:int(r*l*spares_rate)]
-    # for i in range(r):
-    #     for j in range(l):
-    #         if abs(data_in[i][j]) <= data_zeros[-1]:
-    #             data_in[i][j] = 0
-    # return data_in
-
     [r, l] = data_in.shape
     data_sort = np.sort(abs(data_in.reshape([r*l])))
     data_min = data_sort[int(r*l*spares_rate)]
@@ -185,20 +176,6 @@ def model_prediction(data_in, parameter):
     # plt.plot(data_in[4])
     # plt.show()
     prediction_data = np.zeros((r,p))
-    ##   model parameter config
-    # # fcl_1_w = np.reshape(parameter[search_key(parameter.keys(), 'fcl_1', 'w')], [1799*2048])
-    # fcl_1_w = parameter[search_key(parameter.keys(), 'fcl_1', 'w')]
-    # fcl_1_b = parameter[search_key(parameter.keys(), 'fcl_1', 'b')]
-    # # fcl_2_w = np.reshape(parameter[search_key(parameter.keys(), 'fcl_2', 'w')], [2048*2048])
-    # fcl_2_w = parameter[search_key(parameter.keys(), 'fcl_2', 'w')]
-    # fcl_2_b = parameter[search_key(parameter.keys(), 'fcl_2', 'b')]
-    # # fc1_3_w = np.reshape(parameter[search_key(parameter.keys(), 'fcl_3', 'w')], [2048*2048])
-    # fcl_3_w = parameter[search_key(parameter.keys(), 'fcl_3', 'w')]
-    # fcl_3_b = parameter[search_key(parameter.keys(), 'fcl_3', 'b')]
-    # # fc1_4_w = np.reshape(parameter[search_key(parameter.keys(), 'fcl_4', 'w')], [2048*257])
-    # fcl_4_w = parameter[search_key(parameter.keys(), 'fcl_4', 'w')]
-    # fcl_4_b = parameter[search_key(parameter.keys(), 'fcl_4', 'b')]
-
     fcl_1_w = parameter['generator_model/fcl_1/w']
     fcl_1_b = parameter['generator_model/fcl_1/b']
     fcl_2_w = parameter['generator_model/fcl_2/w']
@@ -285,13 +262,6 @@ def prediction_audio(audio_dir, save_dir, scaler_path, model_dir):
 
         predict_audio = restore_audio(audio_feature_map_prediction_correct, audio_angle, n_window, n_overlap, win_func, 'magnitude')
         predict_audio = predict_audio[int(n_window / 2):len(predict_audio) - int(n_window / 2)]
-        # if (np.max(np.abs(predict_audio)) > 1):
-        #     predict_audio = predict_audio / np.max(np.abs(predict_audio))
-        # filter audio
-        # audio_filter = butter_bandpass_filter(audio, 100, 5000, fs, order=6)
-        # add audio
-        # predict_audio, _, _, _, _ = add_noise_to_signal(predict_audio, audio_filter, 10)
-        # predict_audio = butter_bandpass_filter(predict_audio, 100, 5000, fs, order=2)
         save_path = os.path.join(save_dir, file_name)
         soundfile.write(save_path, predict_audio, fs)
         print('save file:', save_path)
