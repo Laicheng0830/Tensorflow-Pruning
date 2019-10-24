@@ -10,7 +10,6 @@ import tensorflow as tf
 from audio_processing import *
 from deeplearning_api import *
 import matplotlib.pylab as plt
-from scipy.signal import butter, lfilter
 
 
 def search_file(root_dir, data_type):
@@ -52,18 +51,6 @@ def relu_activate(data_in):
         if data_in[i] < 0:
             data_in[i] = 0
     return data_in
-
-def butter_bandpass(lowcut, highcut, fs, order=5):
-    nyq = 0.5 * fs
-    low = lowcut / nyq
-    high = highcut / nyq
-    b, a = butter(order, [low, high], btype='band')
-    return b, a
-
-def butter_bandpass_filter(data, lowcut, highcut, fs, order=5):
-    b, a = butter_bandpass(lowcut, highcut, fs, order=order)
-    y = lfilter(b, a, data)
-    return y
 
 def weight_pruning(data_in, spares_rate):
     """

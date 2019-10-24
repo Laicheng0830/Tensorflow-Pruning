@@ -96,7 +96,7 @@ class LeNet_Mode():
         pruning_hparams.sparsity_function_end_step = 250
         pruning_hparams.target_sparsity = .9
         # Create a pruning object using the pruning specification, sparsity seems to have priority over the hparam
-        p = pruning.Pruning(pruning_hparams, global_step=global_step, sparsity=.9)
+        p = pruning.Pruning(pruning_hparams, global_step=global_step)
         prune_op = p.conditional_mask_update_op()
 
         # optimize
